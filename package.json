@@ -5,7 +5,8 @@
     "main": "app.js",
     "dependencies": {
         "express": "~4.0.0",
-        "logfmt": "~1.1.2"
+        "logfmt": "~1.1.2",
+        "mongojs": "~0.17.0"
     },
     "devDependencies": {},
     "scripts": {
