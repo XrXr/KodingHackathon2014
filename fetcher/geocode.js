@@ -12,6 +12,9 @@ var geocoder = require('node-geocoder').getGeocoder(
 
 exports.getCoords = function(place, cb){
     geocoder.geocode(place, function(err, res) {
-        cb(res);
+        var coords = {};
+        coords['latitude'] = res[0]['latitude'];
+        coords['longitude'] = res[0]['longitude'];
+        cb(coords);
     });
 };
