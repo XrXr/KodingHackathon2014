@@ -1,0 +1,20 @@
+{
+    "name": "change-me",
+    "version": "0.0.1",
+    "description": "visualize conflicts in the news",
+    "main": "app.js",
+    "dependencies": {
+        "express": "~4.0.0",
+        "logfmt": "~1.1.2"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "start": "node app.js"
+    },
+    "author": "Alan Wu, Sophia Castellarin, William Li",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/XrXr/KodingHackathon2014"
+    }
+}
