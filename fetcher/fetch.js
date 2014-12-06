@@ -9,7 +9,9 @@ var FeedParser = require('feedparser');
 
 var configFileName = "./feeds";
 var configFileEncoding = "ASCII";
-var retryDelay = 300000; // 5 minutes
+// var retryDelay = 300000; // 5 minutes
+var retryDelay = 3000; // 5 minutes
+var maxRetries = 3;
 
 // load feeds from config file
 var readFeeds = when.promise(function(resolve, reject) {
@@ -22,14 +24,21 @@ var readFeeds = when.promise(function(resolve, reject) {
 });
 
 readFeeds.then(splitLines).then(function (feedAddresses) {
+    // this will keep trying indefinitely until all the addresses are successfully fetched
+    // really bad
     return when.unfold(requestAndParse,
         function (needToProcess) {
             return needToProcess.length === 0;
-        }, writeToDb, feedAddresses);
+        }, writeToDb, feedAddresses.map(wrapAddress));
 }).done();
 
 function splitLines(str) {
     return str.split("\n");
+}
+
+// wrap an address with a request counter
+function wrapAddress (address) {
+    return [address, 0];
 }
 
 /* part of the when.unfold() above*/
@@ -40,19 +49,23 @@ function writeToDb (feedContents) {
             console.log("%s has %d articles in it!", articles[0].meta.title, articles.length);
         }
     });
-    return when.promise(function (resolve) {
-        // this will delay the next iteration in unfold by `retryDelay`
-        setTimeout(resolve, retryDelay);
-    });
+    if (feedContents.hasOwnProperty("!!somefetchFailed")) {  // HACK: see requestAndParse()
+        return when.promise(function (resolve) {
+            // this will delay the next iteration in unfold by `retryDelay`
+            setTimeout(resolve, retryDelay);
+        });
+    }
 }
 
 /* part of the when.unfold() above*/
 function requestAndParse(feedAddresses) {
     if (feedAddresses.length === 0) return;
 
+    var url = 0;
+    var requestCount = 1;
     function requestFeed(address) {
         return when.promise(function (resolve, reject) {
-            var req = request(address, {
+            var req = request(address[url], {
                 timeout: 10000,
                 pool: false,
                 headers: {
@@ -110,10 +123,17 @@ function requestAndParse(feedAddresses) {
         var processed = [];
         for (var i = 0; i < results.length; i++) {
             if (results[i].state === "rejected") {
-                needToRetry.push(feedAddresses[i]);
+                if (feedAddresses[i][requestCount] < maxRetries) {  // stop trying after `maxRetries`
+                    // build a new element based on the old
+                    needToRetry.push([feedAddresses[i][url], feedAddresses[i][requestCount] + 1]);
+                }
             } else {
                 processed.push(results[i].value);  // fullfilled
             }
+        }
+        // HACK: for the handler knowing not to delay for the last iteration
+        if (needToRetry.length !== 0) {
+            processed["!!somefetchFailed"] = true;
         }
         return [processed, needToRetry];  // this array is [valueToSendToHandler, newSeed]
     });
