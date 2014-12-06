@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "dependencies": {
+    "feedparser": "0.19.2",
+    "when": "3.6.3"
+  }
+}
