@@ -1,4 +1,19 @@
 // module that gets news data from the db
-// TODO: (1) connect to db, 
-//      (2) query for something given time and location, 
-//      (3) return json
+
+var mongojs = require('mongojs');
+var util = require('util');
+var db = require('../db/db.js');
+var news = db.collection('news');
+
+exports.getData = function(query, cb){
+    news.find(function(err, docs){
+        cb(docs);
+    });
+};
+
+exports.getNews = function(startDate, endDate, loc){
+     news.find(function(err, docs){
+        cb(docs);
+    });
+};
+
