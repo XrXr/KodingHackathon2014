@@ -7,7 +7,8 @@
         "express": "~4.0.0",
         "logfmt": "~1.1.2",
         "mongojs": "~0.17.0",
-        "node-geocoder": "2.11.1"
+        "node-geocoder": "~2.11.1",
+        "natural": "~0.1.29"
     },
     "devDependencies": {},
     "scripts": {
