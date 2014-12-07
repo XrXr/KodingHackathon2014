@@ -8,15 +8,7 @@ app.use(logfmt.requestLogger());
 var router = express.Router();
 
 router.get('/', function(req, res) {
-    res.json(
-        {message: "root"}
-    );
-});
-
-router.get('/:param', function(req, res) {
-    res.json({
-        message: req.params.param
-    });
+    res.sendfile('./public/index.html');
 });
 
 router.get('/api/newsdata', function(req, res) {
