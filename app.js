@@ -1,14 +1,16 @@
 var express = require("express");
 var logfmt = require("logfmt");
 var news = require("./api/news");
+var path = require("path");
 var app = express();
 
 app.use(logfmt.requestLogger());
+app.use(express.static(path.join(__dirname, 'public')));
 
 var router = express.Router();
 
 router.get('/', function(req, res) {
-    res.sendfile('./public/index.html');
+    res.render('./public/index.html');
 });
 
 router.get('/api/newsdata', function(req, res) {
