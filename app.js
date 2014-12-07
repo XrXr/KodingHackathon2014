@@ -1,5 +1,6 @@
 var express = require("express");
 var logfmt = require("logfmt");
+var news = require("./api/news");
 var app = express();
 
 app.use(logfmt.requestLogger());
@@ -18,20 +19,17 @@ router.get('/:param', function(req, res) {
     });
 });
 
-route.get('/api/newsdata', function(req, res) {
-    res.json({
-        message: "not yet implemented", 
-        feature: "returns a dataset about the news"
+router.get('/api/newsdata', function(req, res) {
+    news.getData(req.query, function(d){
+        res.json(d);
     });
 });
 
-route.get('/api/newsstories', function(req, res){
-     res.json({
-        message: "not yet implemented", 
-        feature: "returns the actual news stories"
+router.get('/api/newsstories', function(req, res){
+    news.getNews(req.query, function(d){
+        res.json(d);
     });
 });
-   
 
 app.use('/', router);
 

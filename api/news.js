@@ -26,8 +26,20 @@ exports.getData = function(query, cb){
 };
 
 exports.getNews = function(query, cb){
-     news.find(query, function(err, docs){
+    var q = cleanQuery(query);
+    news.find(q, function(err, docs){
         cb(docs);
     });
 };
+
+function cleanQuery(q){
+    if (q['loc.lat']){
+        q['loc.lat'] = parseFloat(q['loc.lat']);
+    }
+    if (q['loc.long']){
+        q['loc.long'] = parseFloat(q['loc.long']);
+    }
+
+    return q;
+}
 
