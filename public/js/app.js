@@ -1,4 +1,4 @@
-var latlng = new google.maps.LatLng(25.6586, -80.3568);
+var latlng = new google.maps.LatLng(49.25,123.1);
 var opts = {
     zoom: 3,
     center: latlng
@@ -18,9 +18,9 @@ heatmap = new HeatmapOverlay(map,
         }
 );
 
-var testData = {
-      max: 8,
-        data: [{lat: 24.6408, lng:46.7728, count: 3},{lat: 50.75, lng:-1.55, count: 1}]
-};
-
-heatmap.setData(testData);
+$.getJSON("/api/newsdata", function(d){ 
+    data = {
+        data: d
+    };
+    heatmap.setData(data);
+});
