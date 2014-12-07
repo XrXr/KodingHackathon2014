@@ -26,7 +26,23 @@ $.getJSON("/api/newsdata", function(d){
 });
 
 $.getJSON("/api/newsstories", function(d){
-//    addStories(d);
+    var genHTML = "<h3>Stories</h3>";
+    d.forEach(function(data) {
+ 
+        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + data['loc']['lat'] + "," + data['loc']['long'], function(loc){
+            var r = loc["results"][0]["address_components"];
+            var locData = r[r.length-1]['long_name'];
+        
+            d = {
+                "title": data["title"],
+                "loc": locData
+            };
+            genHTML = genHTML + generateInfo(d);
+
+            $(".info")[0].innerHTML = genHTML; 
+        });
+
+    });
 });
 
 function addStories(d){
