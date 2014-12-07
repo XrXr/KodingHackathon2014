@@ -47,7 +47,18 @@ function fetchAndParse () {
                 if (articles.length > 0) {
                     console.log("%s has %d articles in it!", articles[0].meta.title, articles.length);
                 }
-                finalResults = finalResults.concat(articles);  // accumulate the data
+                finalResults = finalResults.concat(articles.map(function (article) {
+                    var date;
+                    if (article.hasOwnProperty("rss:pubdate")) {
+                        if (article["rss:pubdate"].hasOwnProperty("#")) {
+                            date = article["rss:pubdate"]["#"];
+                        }
+                    }
+                    if (!date) {
+                        date = (new Date()).toString();
+                    }
+                    return [article.title || "", date];  // this is the format the analyzer expects
+                }));  // accumulate the data
             });
             if (feedContents.hasOwnProperty("!!somefetchFailed")) {  // HACK: see requestAndParse()
                 return when.promise(function (resolve) {
