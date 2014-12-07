@@ -16,8 +16,8 @@ exports.getCoords = function(place){
         geocoder.geocode(place, function(err, res) {
             if (err) return reject(err);
             resolve({
-                latitude: res[0].latitude,
-                longitude: res[0].longitude
+                lat: res[0].latitude,
+                long: res[0].longitude
             });
         });
     });

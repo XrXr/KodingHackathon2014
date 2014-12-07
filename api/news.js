@@ -1,7 +1,7 @@
 // module that gets news data from the db
 
 var util = require('util');
-var db = require('../db/db.js');
+var db = require('../db');
 var news = db.collection('news');
 
 exports.getData = function(query, cb){
