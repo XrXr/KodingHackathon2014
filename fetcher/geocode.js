@@ -1,4 +1,5 @@
 // module that converts a city, country to a lat, long coordinate
+var when = require("when");
 
 var geocodeProvider = "google";
 var httpAdapter = "http";
@@ -10,11 +11,14 @@ var geocoder = require('node-geocoder').getGeocoder(
         extra
 );
 
-exports.getCoords = function(place, cb){
-    geocoder.geocode(place, function(err, res) {
-        var coords = {};
-        coords['latitude'] = res[0]['latitude'];
-        coords['longitude'] = res[0]['longitude'];
-        cb(coords);
+exports.getCoords = function(place){
+    return when.promise(function (resolve, reject) {
+        geocoder.geocode(place, function(err, res) {
+            if (err) return reject(err);
+            resolve({
+                latitude: res[0].latitude,
+                longitude: res[0].longitude
+            });
+        });
     });
 };
