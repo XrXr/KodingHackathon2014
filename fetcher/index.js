@@ -9,6 +9,7 @@ var fetch = require("./fetch");
 var analyzer = require("./analyzer");
 var geocode = require("./geocode");
 var db = require("../db");
+var extend = require("extend");
 
 // exported function
 function fetchConflicts () {
@@ -19,13 +20,8 @@ function fetchConflicts () {
 function countryToLatLong (conflicts) {
     return when.settle(conflicts.map(function (conflict) {
         return geocode.getCoords(conflict.country).then(function (location) {
-            return {
-                title: "",
-                content: "",
-                date: conflict.date,
-                type: conflict.type,
-                loc: location
-            };
+            conflict.loc = location;
+            return conflict;
         });
     }));
 }
