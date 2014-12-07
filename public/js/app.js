@@ -26,6 +26,10 @@ $.getJSON("/api/newsdata", function(d){
 });
 
 $.getJSON("/api/newsstories", function(d){
+//    addStories(d);
+});
+
+function addStories(d){
     var genHTML = "<h3>Stories</h3>";
     d.forEach(function(data) {
  
@@ -44,7 +48,8 @@ $.getJSON("/api/newsstories", function(d){
 
     });
 
-});
+
+}
 
 function generateInfo(data){
     return "<div class='story'>" +

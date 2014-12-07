@@ -1,4 +1,4 @@
-.content { background:#ddd }
+.content { background:#fff }
 
 .info { background:#eee; padding:10;  }
 
@@ -6,4 +6,4 @@
 
 .story { padding:5; border-top: dotted 1px; }
 
-.title { padding:10; }
+.title { padding:0 10 10 10; }
