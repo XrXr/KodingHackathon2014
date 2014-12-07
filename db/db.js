@@ -14,3 +14,6 @@ exports.collection = function(dbColl) {
     return db.collection(dbColl);
 };
 
+exports.database = function(collections){
+    return mongojs(uri, collections);
+};
