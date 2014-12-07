@@ -25,8 +25,8 @@ exports.getData = function(query, cb){
     });
 };
 
-exports.getNews = function(startDate, endDate, loc){
-     news.find(function(err, docs){
+exports.getNews = function(query, cb){
+     news.find(query, function(err, docs){
         cb(docs);
     });
 };
