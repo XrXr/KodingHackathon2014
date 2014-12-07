@@ -1,7 +1,7 @@
 .content { background:#fff }
 
 .info { background:#eee; padding:10; position:absolute; z-index:9999; 
-    width:200; top:25; right:50;
+    width:250; top:25; right:50; overflow:scroll; height:80%; 
 }
 
 .map-wrapper { padding: 10; }
