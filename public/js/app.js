@@ -1,5 +1,6 @@
-var latlng = new google.maps.LatLng(25.6, -80.3);
+var latlng = new google.maps.LatLng(25.6586, -80.3568);
 var opts = {
+    zoom: 3,
     center: latlng
 };
 
