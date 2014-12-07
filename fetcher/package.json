@@ -4,6 +4,7 @@
     "feedparser": "0.19.2",
     "when": "3.6.3",
     "iconv-lite": "0.4.5",
-    "request": "2.49.0"
+    "request": "2.49.0",
+    "extend": "2.0.0"
   }
 }
