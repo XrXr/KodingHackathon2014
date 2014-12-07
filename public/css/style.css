@@ -6,4 +6,6 @@
 
 .story { padding:5; border-top: dotted 1px; }
 
-.title { padding:0 10 10 10; }
+.title { padding:0 10 10 10; position:absolute; z-index: 9999; color: #000;
+    text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+}
